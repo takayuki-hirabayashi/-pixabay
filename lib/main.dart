@@ -47,11 +47,12 @@ class _NewsPageState extends State<NewsPage> {
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         itemCount: articles.length,
         itemBuilder: (context, index) {
-          Map<String?, dynamic> article = articles[index];
-          if (Image.network(article['urlToImage']) == Null)
-            return Text('No Image');
-          else
+          Map<String, dynamic> article = articles[index];
+          if (article['urlToImage'] != null) {
             return Image.network(article['urlToImage']);
+          } else {
+            return Text('No Image');
+          }
         },
       ),
     );
