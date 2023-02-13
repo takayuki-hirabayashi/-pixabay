@@ -24,11 +24,13 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+  List articles = [];
+
   Future<void> fetchImages() async {
     Response response = await Dio().get(
         'https://newsapi.org/v2/everything?q=apple&from=2023-02-12&to=2023-02-12&sortBy=popularity&apiKey=3a6625b8dff64baeb4e049bd17a501fc');
-    int totalResults = response.data['totalResults'];
-    print(totalResults);
+    articles = response.data['articles'];
+    setState(() {});
   }
 
   @override
@@ -39,6 +41,19 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: GridView.builder(
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemCount: articles.length,
+        itemBuilder: (context, index) {
+          Map<String?, dynamic> article = articles[index];
+          if (Image.network(article['urlToImage']) == Null)
+            return Text('No Image');
+          else
+            return Image.network(article['urlToImage']);
+        },
+      ),
+    );
   }
 }
