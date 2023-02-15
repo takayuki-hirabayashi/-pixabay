@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -52,10 +53,14 @@ class _NewsPageState extends State<NewsPage> {
             Map<String, dynamic> article = articles[index];
             return Card(
               child: ListTile(
-                leading: ImageIcon(
-                  AssetImage(Image.network(article['urlToImage'])),
+                leading: Image.network(
+                  article['urlToImage'],
                 ),
                 title: Text(article['title']),
+                onTap: () {
+                  final url = Uri.parse(article['url']);
+                  launchUrl(url);
+                },
               ),
             );
           },
@@ -64,6 +69,7 @@ class _NewsPageState extends State<NewsPage> {
     );
   }
 }
+
 
 
 //タイトルのみ一覧で表示することができた
