@@ -28,7 +28,7 @@ class _NewsPageState extends State<NewsPage> {
 
   Future<void> fetchImages() async {
     Response response = await Dio().get(
-        'https://newsapi.org/v2/everything?q=apple&from=2023-02-12&to=2023-02-12&sortBy=popularity&apiKey=3a6625b8dff64baeb4e049bd17a501fc');
+        'https://newsapi.org/v2/everything?q=apple&from=2023-02-14&to=2023-02-14&sortBy=popularity&apiKey=3a6625b8dff64baeb4e049bd17a501fc');
     articles = response.data['articles'];
     setState(() {});
   }
@@ -41,20 +41,55 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GridView.builder(
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        itemCount: articles.length,
-        itemBuilder: (context, index) {
-          Map<String, dynamic> article = articles[index];
-          if (article['urlToImage'] != null) {
-            return Image.network(article['urlToImage']);
-          } else {
-            return Text('No Image');
-          }
-        },
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Neumann News App'),
+        ),
+        body: ListView.builder(
+          itemCount: articles.length,
+          itemBuilder: (context, index) {
+            Map<String, dynamic> article = articles[index];
+            return Card(
+              child: ListTile(
+                leading: ImageIcon(
+                  AssetImage(Image.network(article['urlToImage'])),
+                ),
+                title: Text(article['title']),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
 }
+
+
+//タイトルのみ一覧で表示することができた
+// body: ListView.builder(
+//           itemCount: articles.length,
+//           itemBuilder: (context, index) {
+//             Map<String, dynamic> article = articles[index];
+//             if (article['title'] != null) {
+//               return Text(article['title']);
+//             } else {
+//               return Text('No Image');
+//             }
+//           },
+//         ),
+
+// 画像のみ一覧で表示することができた
+// body: GridView.builder(
+//           gridDelegate:
+//               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+//           itemCount: articles.length,
+//           itemBuilder: (context, index) {
+//             Map<String?, dynamic> article = articles[index];
+//             if (Image.network(article['urlToImage']) == Null)
+//               return Text('No Image');
+//             else
+//               return Image.network(article['urlToImage']);
+//           },
+//         ),
+
