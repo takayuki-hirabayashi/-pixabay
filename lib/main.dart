@@ -28,8 +28,14 @@ class _NewsPageState extends State<NewsPage> {
   List articles = [];
 
   Future<void> fetchImages() async {
-    Response response = await Dio().get(
-        'https://newsapi.org/v2/everything?q=apple&from=2023-02-14&to=2023-02-14&sortBy=popularity&apiKey=3a6625b8dff64baeb4e049bd17a501fc');
+    Response response =
+        await Dio().get('https://newsapi.org/v2/everything', queryParameters: {
+      'q': 'apple',
+      'from': '2023-02-14',
+      'to': '2023-02-14',
+      'sortBy': '',
+      'apiKey': '3a6625b8dff64baeb4e049bd17a501fc',
+    });
     articles = response.data['articles'];
     setState(() {});
   }
@@ -51,18 +57,31 @@ class _NewsPageState extends State<NewsPage> {
           itemCount: articles.length,
           itemBuilder: (context, index) {
             Map<String, dynamic> article = articles[index];
-            return Card(
-              child: ListTile(
-                leading: Image.network(
-                  article['urlToImage'],
+            if (article['urlToImage'] != null) {
+              return Card(
+                child: ListTile(
+                  leading: Image.network(
+                    article['urlToImage'],
+                  ),
+                  title: Text(article['title']),
+                  onTap: () {
+                    final url = Uri.parse(article['url']);
+                    launchUrl(url);
+                  },
                 ),
-                title: Text(article['title']),
-                onTap: () {
-                  final url = Uri.parse(article['url']);
-                  launchUrl(url);
-                },
-              ),
-            );
+              );
+            } else {
+              return Card(
+                child: ListTile(
+                  leading: Text('No Image'),
+                  title: Text(article['title']),
+                  onTap: () {
+                    final url = Uri.parse(article['url']);
+                    launchUrl(url);
+                  },
+                ),
+              );
+            }
           },
         ),
       ),
