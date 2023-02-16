@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,7 @@ class _NewsPageState extends State<NewsPage> {
   Future<void> fetchImages() async {
     Response response =
         await Dio().get('https://newsapi.org/v2/everything', queryParameters: {
-      'q': 'apple',
+      'q': 'bitcoin',
       'from': '2023-02-14',
       'to': '2023-02-14',
       'sortBy': '',
@@ -60,8 +62,15 @@ class _NewsPageState extends State<NewsPage> {
             if (article['urlToImage'] != null) {
               return Card(
                 child: ListTile(
-                  leading: Image.network(
-                    article['urlToImage'],
+                  leading: SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Image.network(
+                      article['urlToImage'],
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                    ),
                   ),
                   title: Text(article['title']),
                   onTap: () {
@@ -73,7 +82,13 @@ class _NewsPageState extends State<NewsPage> {
             } else {
               return Card(
                 child: ListTile(
-                  leading: Text('No Image'),
+                  leading: SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Container(
+                      color: Colors.green,
+                    ),
+                  ),
                   title: Text(article['title']),
                   onTap: () {
                     final url = Uri.parse(article['url']);
@@ -117,4 +132,3 @@ class _NewsPageState extends State<NewsPage> {
 //               return Image.network(article['urlToImage']);
 //           },
 //         ),
-
