@@ -29,10 +29,10 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   List articles = [];
 
-  Future<void> fetchImages() async {
+  Future<void> fetchImages(String text) async {
     Response response =
         await Dio().get('https://newsapi.org/v2/everything', queryParameters: {
-      'q': 'bitcoin',
+      'q': '$text',
       'from': '2023-02-14',
       'to': '2023-02-14',
       'sortBy': '',
@@ -45,7 +45,8 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
-    fetchImages();
+    //後でここを変更する必要あり
+    fetchImages('apple');
   }
 
   @override
@@ -53,7 +54,17 @@ class _NewsPageState extends State<NewsPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Neumann News App'),
+          title: TextFormField(
+            //ここも同様に変更の必要あり
+            initialValue: 'apple',
+            decoration: const InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+            ),
+            onFieldSubmitted: (text) {
+              fetchImages(text);
+            },
+          ),
         ),
         body: ListView.builder(
           itemCount: articles.length,
