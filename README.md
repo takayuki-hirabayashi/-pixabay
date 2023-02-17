@@ -1,16 +1,19 @@
-# pixabay
+2022 ノイマンインターン
 
-A new Flutter project.
+Flitter で News アプリを作ろう
 
-## Getting Started
+の課題です。
 
-This project is a starting point for a Flutter application.
+仕様
+・トップページに最新のニュースが一覧で表示される。
+（ニュースの各リストには、API で取得したイメージ画像とタイトルが表示されている。
+日時は DateTime.now を利用し、検索をした日から前日の間の記事が表示される。
+NewsAPI の Request parameters を利用し、初期の検索ワードは’日本’としている。
+NewsAPI の Request parameters の sortBy が空欄になっていることにより、デフォルトの publishedAt が入り、投稿の新しい順に記事が並べられている。）
 
-A few resources to get you started if this is your first Flutter project:
+・一覧からニュースをクリック or タップすると、そのニュースの詳細ページをブラウザで開くことができる。
+（url_launcher を利用して、各記事の URL をブラウザで開くようにしている。）
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+・ニュースを任意のワードで検索する事ができ、検索結果を表示する。
+（appBar に TextFormField を配置し、入力できるようにしている。
+初期の検索ワードである'日本'を initialValue としている。）

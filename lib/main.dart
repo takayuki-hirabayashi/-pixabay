@@ -47,7 +47,6 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
-    //後でここを変更する必要あり
     fetchImages('日本');
   }
 
@@ -57,7 +56,6 @@ class _NewsPageState extends State<NewsPage> {
       home: Scaffold(
         appBar: AppBar(
           title: TextFormField(
-            //ここも同様に変更の必要あり
             initialValue: '日本',
             decoration: const InputDecoration(
               fillColor: Colors.white,
@@ -116,32 +114,3 @@ class _NewsPageState extends State<NewsPage> {
     );
   }
 }
-
-
-
-//タイトルのみ一覧で表示することができた
-// body: ListView.builder(
-//           itemCount: articles.length,
-//           itemBuilder: (context, index) {
-//             Map<String, dynamic> article = articles[index];
-//             if (article['title'] != null) {
-//               return Text(article['title']);
-//             } else {
-//               return Text('No Image');
-//             }
-//           },
-//         ),
-
-// 画像のみ一覧で表示することができた
-// body: GridView.builder(
-//           gridDelegate:
-//               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-//           itemCount: articles.length,
-//           itemBuilder: (context, index) {
-//             Map<String?, dynamic> article = articles[index];
-//             if (Image.network(article['urlToImage']) == Null)
-//               return Text('No Image');
-//             else
-//               return Image.network(article['urlToImage']);
-//           },
-//         ),
