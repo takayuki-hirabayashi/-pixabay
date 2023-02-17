@@ -56,25 +56,32 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Form(
-            key: _formKey,
-            child: TextFormField(
-              initialValue: '日本',
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'テキストを入力してください。';
-                }
-              },
-              decoration: const InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(80.0),
+          child: AppBar(
+            title: Form(
+              key: _formKey,
+              child: TextFormField(
+                initialValue: '日本',
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'テキストを入力してください。';
+                  }
+                },
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 10,
+                  ),
+                  helperText: 'search',
+                ),
+                onFieldSubmitted: (text) {
+                  if (_formKey.currentState!.validate()) {
+                    fetchImages(text);
+                  }
+                },
               ),
-              onFieldSubmitted: (text) {
-                if (_formKey.currentState!.validate()) {
-                  fetchImages(text);
-                }
-              },
             ),
           ),
         ),
