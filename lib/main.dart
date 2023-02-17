@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'apikey.dart';
 import 'package:dio/dio.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +30,7 @@ class _NewsPageState extends State<NewsPage> {
   List articles = [];
   DateTime now = DateTime.now();
   DateTime yesterday = DateTime.now().add(const Duration(days: 1) * -1);
+  String APIKey = api_key;
 
   Future<void> fetchImages(String text) async {
     Response response =
@@ -38,7 +39,7 @@ class _NewsPageState extends State<NewsPage> {
       'from': '$yesterday',
       'to': '$now',
       'sortBy': '',
-      'apiKey': '3a6625b8dff64baeb4e049bd17a501fc',
+      'apiKey': APIKey,
     });
     articles = response.data['articles'];
     setState(() {});
