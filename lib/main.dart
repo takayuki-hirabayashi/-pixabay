@@ -28,13 +28,15 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   List articles = [];
+  DateTime now = DateTime.now();
+  DateTime yesterday = DateTime.now().add(const Duration(days: 1) * -1);
 
   Future<void> fetchImages(String text) async {
     Response response =
         await Dio().get('https://newsapi.org/v2/everything', queryParameters: {
       'q': '$text',
-      'from': '2023-02-14',
-      'to': '2023-02-14',
+      'from': '$yesterday',
+      'to': '$now',
       'sortBy': '',
       'apiKey': '3a6625b8dff64baeb4e049bd17a501fc',
     });
@@ -46,7 +48,7 @@ class _NewsPageState extends State<NewsPage> {
   void initState() {
     super.initState();
     //後でここを変更する必要あり
-    fetchImages('apple');
+    fetchImages('日本');
   }
 
   @override
@@ -56,7 +58,7 @@ class _NewsPageState extends State<NewsPage> {
         appBar: AppBar(
           title: TextFormField(
             //ここも同様に変更の必要あり
-            initialValue: 'apple',
+            initialValue: '日本',
             decoration: const InputDecoration(
               fillColor: Colors.white,
               filled: true,
