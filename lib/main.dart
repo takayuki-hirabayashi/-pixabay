@@ -31,6 +31,7 @@ class _NewsPageState extends State<NewsPage> {
   DateTime now = DateTime.now();
   DateTime yesterday = DateTime.now().add(const Duration(days: 1) * -1);
   String APIKey = api_key;
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> fetchImages(String text) async {
     Response response =
@@ -56,15 +57,25 @@ class _NewsPageState extends State<NewsPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: TextFormField(
-            initialValue: '日本',
-            decoration: const InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
+          title: Form(
+            key: _formKey,
+            child: TextFormField(
+              initialValue: '日本',
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'テキストを入力してください。';
+                }
+              },
+              decoration: const InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+              ),
+              onFieldSubmitted: (text) {
+                if (_formKey.currentState!.validate()) {
+                  fetchImages(text);
+                }
+              },
             ),
-            onFieldSubmitted: (text) {
-              fetchImages(text);
-            },
           ),
         ),
         body: ListView.builder(
